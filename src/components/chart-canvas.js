@@ -8,11 +8,11 @@ export class ChartCanvas extends Component {
   returnSelectedChart() {
     switch (this.props.chartType) {
       case "bar-graph":
-        return <ChartBar />;
+        return <ChartBar dataSource={this.props.dataSource} />;
       case "line-graph":
-        return <ChartLine />;
+        return <ChartLine dataSource={this.props.dataSource} />;
       case "pie-chart":
-        return <ChartPie />;
+        return <ChartPie dataSource={this.props.dataSource} />;
       default:
         return null;
     }

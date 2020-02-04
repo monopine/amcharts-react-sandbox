@@ -32,6 +32,18 @@ export class ChartControls extends Component {
     });
   }
 
+  returnSelectedData() {
+    const result = this.props.dataSourceOptions.find(
+      ({ value }) => value === this.props.activeDataSource
+    );
+
+    if (result) {
+      return result;
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <>
@@ -56,17 +68,10 @@ export class ChartControls extends Component {
           )}
         </div>
 
-        <div className="chart-area">
-          <p>
-            Currently showing a{" "}
-            <span className="highlight">{this.props.chartType}</span> using the{" "}
-            <span className="highlight">{this.props.activeDataSource}</span>
-          </p>
-          <ChartCanvas
-            chartType={this.props.chartType}
-            dataSource={this.props.activeDataSource}
-          />
-        </div>
+        <ChartCanvas
+          chartType={this.props.chartType}
+          dataSource={this.returnSelectedData()}
+        />
       </>
     );
   }

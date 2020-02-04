@@ -10,11 +10,12 @@ export class ChartLine extends Component {
     let chart = am4core.create("chartdiv", am4charts.XYChart);
     chart.paddingRight = 20;
 
-    chart.data = generateChartData();
+    // chart.data = generateChartData();
+    chart.data = this.props.dataSource.data;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.baseInterval = {
-      timeUnit: "minute",
+      timeUnit: "day",
       count: 1
     };
     dateAxis.tooltipDateFormat = "HH:mm, d MMMM";
@@ -24,10 +25,13 @@ export class ChartLine extends Component {
     valueAxis.title.text = "Unique visitors";
 
     let series = chart.series.push(new am4charts.LineSeries());
+    // series.dataFields.dateX = "date";
+    // series.dataFields.valueY = "visits";
+    // series.tooltipText = "Visits: [bold]{valueY}[/]";
+    // series.fillOpacity = 0.3;
+
     series.dataFields.dateX = "date";
-    series.dataFields.valueY = "visits";
-    series.tooltipText = "Visits: [bold]{valueY}[/]";
-    series.fillOpacity = 0.3;
+    series.dataFields.valueY = "value";
 
     chart.cursor = new am4charts.XYCursor();
     chart.cursor.lineY.opacity = 0;
@@ -36,32 +40,10 @@ export class ChartLine extends Component {
 
     dateAxis.start = 0.8;
     dateAxis.keepSelection = true;
+  }
 
-    function generateChartData() {
-      let chartData = [];
-      // current date
-      let firstDate = new Date();
-      // now set 500 minutes back
-      firstDate.setMinutes(firstDate.getDate() - 500);
-
-      // and generate 500 data items
-      let visits = 500;
-      for (var i = 0; i < 500; i++) {
-        let newDate = new Date(firstDate);
-        // each time we add one minute
-        newDate.setMinutes(newDate.getMinutes() + i);
-        // some random number
-        visits += Math.round(
-          (Math.random() < 0.5 ? 1 : -1) * Math.random() * 10
-        );
-        // add data item to the array
-        chartData.push({
-          date: newDate,
-          visits: visits
-        });
-      }
-      return chartData;
-    }
+  componentDidUpdate() {
+    this.chart.data = this.props.dataSource.data;
   }
 
   componentWillUnmount() {

@@ -14,9 +14,8 @@ export default function App() {
 
         <div className="section-wrap">
           <p>
-            Toggle the <span className="tooltip">data source</span> and the{" "}
-            <span className="tooltip">chart type</span> to see the data through
-            a new lens
+            Toggle the data source and the chart type. React will load a new
+            AMChart instance/component, and use data from Redux.
           </p>
         </div>
 

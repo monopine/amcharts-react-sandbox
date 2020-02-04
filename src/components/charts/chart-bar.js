@@ -10,19 +10,7 @@ export class ChartBar extends Component {
 
     chart.paddingRight = 20;
 
-    let data = [];
-    let visits = 0;
-    let max = 31;
-    for (let i = 1; i < 31; i++) {
-      visits += Math.floor(Math.random() * Math.floor(max));
-      data.push({
-        date: new Date(2020, 0, i),
-        name: "name" + i,
-        value: visits
-      });
-    }
-
-    chart.data = data;
+    chart.data = this.props.dataSource.data;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.renderer.grid.template.location = 0;
@@ -43,6 +31,10 @@ export class ChartBar extends Component {
     chart.scrollbarX = scrollbarX;
 
     this.chart = chart;
+  }
+
+  componentDidUpdate() {
+    this.chart.data = this.props.dataSource.data;
   }
 
   componentWillUnmount() {
